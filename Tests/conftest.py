@@ -17,6 +17,7 @@ def browser(request):
     if browser_name == "chrome":
         print("[Chrome]", end=' ')
         options = webdriver.ChromeOptions()
+        options.add_argument("--start-maximized")
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
         options.add_experimental_option('prefs', {'intl.accept_languages': user_language})
         browser = webdriver.Chrome(options=options)
