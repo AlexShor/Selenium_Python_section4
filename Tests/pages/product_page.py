@@ -8,15 +8,20 @@ class ProductPage(BasePage):
         self.solve_quiz_and_get_code()
 
     def product_should_be_added_to_basket(self):
-        self.should_be_alert_success()
-        self.should_be_alert_basket_total_price()
-
-    def should_be_alert_success(self):
         product_title = self.browser.find_element(*ProductPageLocators.PRODUCT_TITLE).text
-        success_alerts = [elem.text for elem in self.browser.find_elements(*ProductPageLocators.ALERT_SUCCESS_INNER)]
-        assert product_title in ''.join(success_alerts), 'Alert with product title not presented or wrong title'
-
-    def should_be_alert_basket_total_price(self):
         product_price = self.browser.find_element(*ProductPageLocators.PRODUCT_PRICE).text
+        self.should_be_alert_success(product_title)
+        self.should_be_alert_basket_total_price(product_price)
+        self.should_be_basket_total_price(product_price)
+
+    def should_be_alert_success(self, product_title):
+        success_alerts = [elem.text for elem in self.browser.find_elements(*ProductPageLocators.ALERT_SUCCESS_INNER)]
+        assert product_title == success_alerts[0], 'Alert with product title not presented or wrong title'
+
+    def should_be_alert_basket_total_price(self, product_price):
         alert_basket_total_texts = self.browser.find_element(*ProductPageLocators.ALERT_BASKET_TOTAL).text
-        assert product_price in alert_basket_total_texts, 'Alert with basket total price not presented or wrong price'
+        assert product_price == alert_basket_total_texts, 'Alert with basket total price not presented or wrong price'
+
+    def should_be_basket_total_price(self, product_price):
+        basket_total_price_text = self.browser.find_element(*ProductPageLocators.BASKET_TOTAL_PRICE).text
+        assert product_price in basket_total_price_text, 'Basket total price not presented or wrong price'
