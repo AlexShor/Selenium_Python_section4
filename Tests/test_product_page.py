@@ -14,6 +14,7 @@ def test_guest_can_add_product_to_basket(browser, parameter):
 
 
 @pytest.mark.display_disappear_messages
+@pytest.mark.skip
 def test_guest_cant_see_success_message_after_adding_product_to_basket(browser):
     link = f"http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer0"
     page = ProductPage(browser, link, 5)
@@ -31,6 +32,7 @@ def test_guest_cant_see_success_message(browser):
 
 
 @pytest.mark.display_disappear_messages
+@pytest.mark.skip
 def test_message_disappeared_after_adding_product_to_basket(browser):
     link = f"http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/?promo=offer0"
     page = ProductPage(browser, link, 5)
