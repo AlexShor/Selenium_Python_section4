@@ -1,5 +1,5 @@
 from .base_page import BasePage
-from .locators import ProductPageLocators
+from .constants.locators import ProductPageLocators
 
 
 class ProductPage(BasePage):
