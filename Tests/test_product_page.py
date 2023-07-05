@@ -1,9 +1,34 @@
+import time
+
 import pytest
+from faker import Faker
 
 from .pages.product_page import ProductPage
 from .pages.login_page import LoginPage
 from .pages.basket_page import BasketPage
 from .pages.constants.urls import Links, QueryParams
+
+
+@pytest.mark.registered_user_add_to_basket
+class TestUserAddToBasketFromProductPage:
+    @pytest.fixture(scope='function', autouse=True)
+    def setup(self, browser):
+        page = LoginPage(browser, Links.LOGIN_PAGE_URL)
+        page.open()
+        page.register_new_user(str(Faker().email()), "Aaa123123123")
+        page.should_be_authorized_user()
+
+    def test_user_cant_see_success_message(self, browser):
+        page = ProductPage(browser, Links.BOOK_CODERS_AT_WORK)
+        page.open()
+        page.should_not_be_success_message()
+
+    def test_user_can_add_product_to_basket(self, browser):
+        page = ProductPage(browser, Links.BOOK_CODERS_AT_WORK)
+        page.open()
+        page.add_product_to_basket()
+        page.product_should_be_added_to_basket()
+        time.sleep(2)
 
 
 @pytest.mark.add_product_to_basket
@@ -13,7 +38,7 @@ def test_guest_can_add_product_to_basket(browser, param):
     link = f"{Links.BOOK_CODERS_AT_WORK}?{QueryParams.PROMO}={param}"
     page = ProductPage(browser, link)
     page.open()
-    page.add_product_to_basket()
+    page.add_product_to_basket(True)
     page.product_should_be_added_to_basket()
 
 

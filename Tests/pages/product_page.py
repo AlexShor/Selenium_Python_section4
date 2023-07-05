@@ -3,9 +3,10 @@ from .constants.locators import ProductPageLocators
 
 
 class ProductPage(BasePage):
-    def add_product_to_basket(self):
+    def add_product_to_basket(self, solve_quiz=False):
         self.browser.find_element(*ProductPageLocators.ADD_TO_BASKET_BUTTON).click()
-        self.solve_quiz_and_get_code()
+        if solve_quiz:
+            self.solve_quiz_and_get_code()
 
     def product_should_be_added_to_basket(self):
         product_title = self.browser.find_element(*ProductPageLocators.PRODUCT_TITLE).text
