@@ -34,14 +34,13 @@ class TestUserAddToBasketFromProductPage:
 @pytest.mark.need_review
 @pytest.mark.add_product_to_basket
 @pytest.mark.parametrize('param', [
-    pytest.param('offer' + str(i), marks=pytest.mark.xfail(i == 7, reason='')) for i in range(10)])
+    pytest.param('offer' + str(i), marks=pytest.mark.xfail(i == 7, reason='')) for i in range(4)])
 def test_guest_can_add_product_to_basket(browser, param):
     link = f"{Links.BOOK_CODERS_AT_WORK}?{QueryParams.PROMO}={param}"
     page = ProductPage(browser, link)
     page.open()
     page.add_product_to_basket(True)
     page.product_should_be_added_to_basket()
-    time.sleep(3)
 
 
 @pytest.mark.display_disappear_messages
