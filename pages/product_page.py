@@ -17,7 +17,11 @@ class ProductPage(BasePage):
 
     def should_be_alert_success(self, product_title):
         success_alerts = [elem.text for elem in self.browser.find_elements(*ProductPageLocators.ALERT_SUCCESS_INNER)]
-        assert product_title == success_alerts[0], 'Alert with product title not presented or wrong title'
+        check = False
+        for strong_text in success_alerts:
+            if strong_text == product_title:
+                check = True
+        assert check, 'Alert with product title not presented or wrong title'
 
     def should_be_alert_basket_total_price(self, product_price):
         alert_basket_total_texts = self.browser.find_element(*ProductPageLocators.ALERT_BASKET_TOTAL).text

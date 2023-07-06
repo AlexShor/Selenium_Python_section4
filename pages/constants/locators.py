@@ -2,15 +2,12 @@ from selenium.webdriver.common.by import By
 
 
 class BasePageLocators:
+    HTML = (By.TAG_NAME, 'html')
     LOGIN_LINK = (By.CSS_SELECTOR, "#login_link")
     LOGIN_LINK_INVALID = (By.CSS_SELECTOR, "#login_link_inc")
     VIEW_BASKET_BUTTON = (By.CSS_SELECTOR, ".basket-mini a.btn")
     ACTIVE_BREADCRUMB = (By.CSS_SELECTOR, ".breadcrumb .active")
     USER_ICON = (By.CSS_SELECTOR, ".icon-user")
-
-
-class MainPageLocators:
-    pass
 
 
 class LoginPageLocators:
@@ -37,4 +34,4 @@ class ProductPageLocators:
 class BasketPageLocators:
     TITLE_BASKET_PAGE = (By.CSS_SELECTOR, ".page-header > h1")
     BASKET_ITEMS = (By.CSS_SELECTOR, "#basket_formset > .basket-items")
-    EMPTY_BASKET_MESSAGE = (By.XPATH, '//p[contains(text(), "Your basket is empty")]')
+    EMPTY_BASKET_MESSAGE = (By.CSS_SELECTOR, '#content_inner > p')

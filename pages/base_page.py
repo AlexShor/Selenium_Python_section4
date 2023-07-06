@@ -1,3 +1,4 @@
+import time
 from math import log, sin
 
 from selenium.webdriver.support.wait import WebDriverWait
@@ -12,6 +13,7 @@ class BasePage:
         self.browser = browser
         self.url = url
         self.browser.implicitly_wait(timeout)
+        self.browser.maximize_window()
 
     def open(self):
         self.browser.get(self.url)
@@ -29,7 +31,8 @@ class BasePage:
 
     def is_not_element_present(self, method, css_selector, timeout=4):
         try:
-            WebDriverWait(self.browser, timeout).until(EC.presence_of_element_located((method, css_selector)))
+            WebDriverWait(self.browser, timeout).\
+                until(EC.presence_of_element_located((method, css_selector)))
         except TimeoutException:
             return True
         return False
@@ -51,6 +54,9 @@ class BasePage:
     def go_to_basket_page(self):
         self.browser.find_element(*BasePageLocators.VIEW_BASKET_BUTTON).click()
 
+    def get_page_language(self):
+        return self.browser.find_element(*BasePageLocators.HTML).get_attribute("lang")
+
     def solve_quiz_and_get_code(self):
         alert = self.browser.switch_to.alert
         x = alert.text.split(" ")[2]
@@ -64,3 +70,5 @@ class BasePage:
             alert.accept()
         except NoAlertPresentException:
             print("No second alert presented", end=' ')
+        finally:
+            if 'firefox' in str(self.browser): time.sleep(1)
