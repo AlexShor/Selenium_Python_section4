@@ -1,5 +1,3 @@
-import time
-
 import pytest
 from faker import Faker
 
@@ -34,7 +32,7 @@ class TestUserAddToBasketFromProductPage:
 @pytest.mark.need_review
 @pytest.mark.add_product_to_basket
 @pytest.mark.parametrize('param', [
-    pytest.param('offer' + str(i), marks=pytest.mark.xfail(i == 7, reason='')) for i in range(4)])
+    pytest.param('offer' + str(i), marks=pytest.mark.xfail(i == 7, reason='')) for i in range(10)])
 def test_guest_can_add_product_to_basket(browser, param):
     link = f"{Links.BOOK_CODERS_AT_WORK}?{QueryParams.PROMO}={param}"
     page = ProductPage(browser, link)
